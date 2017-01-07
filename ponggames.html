@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+    </title>
+</head>
+
+<body>
+    <p>W, A, S, D keys to move</p>
+    <section style="border-style: solid; border-width: 2px; width: 500px;">
+        <canvas width="500" height="400" id="pong" tabindex="0">
+            Canvas tag not supported
+        </canvas>
+    </section>
+    <script type="text/javascript">
+    //coordinates of rectangle starting position away from origin
+    var x = 0;
+    var y = 100;
+    var a = 470;
+    var b = 100;
+
+    var c = document.querySelector("#pong");
+    var ctx = c.getContext("2d");
+
+    //begins a path
+    ctx.beginPath();
+
+    //arc(x, y, r, startangle, endangle)
+    //100 is the x coordinate of the center of the circle
+    //50 is the y coordinate of the center of the circle
+    //40 is the radius of the circle
+    //0 is where the angle of the arc starts
+    //2*Math.PI is where the arc ends
+    var xc = 150;
+    var yc = 50;
+    var xvelocity = 5;
+    var yvelocity = 5;
+    var radius = 15;
+    var intersects = false;
+
+    window.setInterval(moveCircle, 50);
+
+    function moveCircle() {
+
+    	console.log(intersects);
+        intersect();
+        if (intersects) {
+            xvelocity = xvelocity * -1;
+        }
+        xc += xvelocity;
+        draw();
+    }
+
+    function intersect() {
+        if (xc + radius >= x &&
+            xc - radius <= x + 30 &&
+            yc - radius <= y + 80 &&
+            yc + radius >= y) {
+            intersects = true;
+        } 
+
+        else if (xc + radius >= a &&
+            xc - radius <= a + 30 &&
+            yc - radius <= b + 80 &&
+            yc + radius >= b) {
+            intersects = true;
+        } else {
+            intersects = false;
+        }
+
+    }
+
+    function draw() {
+        clearCanvas();
+        ctx.beginPath();
+
+        ctx.arc(xc, yc, 15, 0, 2 * Math.PI);
+        // (x, y, radius, start angle (radians), finish angle (radians))
+
+        //ends a path
+        ctx.closePath();
+
+        //actually draw it
+        ctx.stroke();
+
+        canvas_context.fillRect(a, b, 30, 80);
+        canvas_context.fillRect(x, y, 30, 80);
+    }
+
+
+
+    ctx.arc(xc, yc, 15, 0, 2 * Math.PI);
+    // (x, y, radius, start angle (radians), finish angle (radians))
+
+    //ends a path
+    ctx.closePath();
+
+    //actually draw it
+    ctx.stroke();
+
+
+
+    var canvas = document.querySelector("#pong");
+    canvas.addEventListener('keydown', doKeyDown, true);
+
+    canvas_context = canvas.getContext("2d");
+    canvas_context.fillRect(x, y, 30, 80);
+    canvas_context.fillRect(a, b, 30, 80);
+
+    function clearCanvas() {
+        canvas.width = canvas.width;
+    }
+
+    function doKeyDown(e) {
+        console.log(e.keyCode);
+
+        //====================
+        //	THE S KEY
+        //====================
+        if (e.keyCode == 83) {
+
+            y = y + 10;
+
+        }
+
+
+        //	THE W KEY
+        //====================
+        if (e.keyCode == 87) {
+
+            y = y - 10;
+
+        }
+
+        //====================
+        //	THE l KEY
+        //====================
+        if (e.keyCode == 76) {
+
+            b = b + 10;
+
+        }
+
+        //====================
+        //	THE o KEY
+        //====================
+        if (e.keyCode == 79) {
+
+            b = b - 10;
+
+        }
+
+
+
+
+
+    }
+    </script>
+</body>
+
+</html>
